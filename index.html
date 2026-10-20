@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPTEL Logistics & Supply Chain Management - Practice Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const quizData = {
+          course: "Logistics and Supply Chain Management",
+          weeks: [
+            {
+              weekNumber: 1,
+              questions: [
+                { id: "w1_q1", question: "Which of the following best defines logistics?", options: ["A) The process of manufacturing goods at the lowest cost", "B) The management of the flow of goods, information, and resources from point of origin to point of consumption", "C) The marketing and distribution of finished products only", "D) The financial planning of a company's supply chain"], answer: "B" },
+                { id: "w1_q2", question: "Which step comes immediately after order placement in the logistics process?", options: ["A) Delivery", "B) Transportation", "C) Order Processing", "D) Warehousing"], answer: "C" },
+                { id: "w1_q3", question: "Just-in-Time (JIT) logistics primarily aims to:", options: ["A) Increase buffer stock in warehouses", "B) Minimize inventory holding costs by aligning production with customer demand", "C) Expand the number of suppliers", "D) Increase lead times for better planning"], answer: "B" },
+                { id: "w1_q4", question: "Omni-channel logistics is primarily driven by the growth of:", options: ["A) Air freight", "B) E-commerce and multi-channel retailing", "C) Rail transportation", "D) Traditional brick and mortar stores"], answer: "B" },
+                { id: "w1_q5", question: "Which of the following is a challenge specific to Indian logistics companies?", options: ["A) Surplus of delivery staff and drivers", "B) Overdevelopment of warehousing infrastructure", "C) High order intensity ratio and transportation roadblocks", "D) Excessive investment in new technologies"], answer: "C" },
+                { id: "w1_q6", question: "A 5PL (Fifth Party Logistics) provider is also known as a:", options: ["A) Logistics aggregator", "B) Asset-based carrier", "C) Lead logistics provider", "D) In-house logistics manager"], answer: "A" },
+                { id: "w1_q7", question: "Which modern logistics concept focuses on reducing environmental impact through eco-friendly fuels, packaging reduction, and waste minimization?", options: ["A) Lean Logistics", "B) Agile Logistics", "C) Green Logistics", "D) Reverse Logistics"], answer: "C" },
+                { id: "w1_q8", question: "Cross-docking is best described as:", options: ["A) Long-term storage of goods in a central warehouse", "B) A type of customs clearance procedure", "C) A method of inventory counting", "D) A process where incoming shipments are unloaded, sorted, and loaded onto outbound trucks without long-term storage"], answer: "D" },
+                { id: "w1_q9", question: "Which of the following is a utility of warehousing?", options: ["A) Increasing transportation costs", "B) Reducing product quality", "C) Providing seasonal storage to handle demand fluctuations", "D) Replacing manufacturing operations"], answer: "C" },
+                { id: "w1_q10", question: "Which type of logistics service provider is described as an 'asset-based carrier' that owns its own transportation means such as ships, airlines, or trucks?", options: ["A) 1PL", "B) 2PL", "C) 4PL", "D) 5PL"], answer: "B" }
+              ]
+            },
+            {
+              weekNumber: 2,
+              questions: [
+                { id: "w2_q1", question: "Which e-logistics key element allows for the electronic exchange of business documents like purchase orders and invoices between trading partners?", options: ["A) Warehouse Management System (WMS)", "B) Transportation Management System (TMS)", "C) Electronic Data Interchange (EDI)", "D) Global Trade Management (GTM)"], answer: "C" },
+                { id: "w2_q2", question: "Which technology in e-logistics enhances transparency, security, and traceability in supply chain transactions through decentralized record-keeping?", options: ["A) Blockchain technology", "B) GPS tracking", "C) RFID", "D) Cloud computing"], answer: "A" },
+                { id: "w2_q3", question: "Incoterms are standardized terms that define:", options: ["A) Packaging standards for global shipments", "B) The rights and responsibilities of buyers and sellers in international transactions", "C) Customs duty rates across countries", "D) Insurance premiums for international cargo"], answer: "B" },
+                { id: "w2_q4", question: "Which market penetration strategy involves selling goods produced in one country directly to customers in another country?", options: ["A) Licensing", "B) Joint Venture", "C) Exporting", "D) Countertrade"], answer: "C" },
+                { id: "w2_q5", question: "Tata Steel's acquisition of Corus Group is an example of which international market penetration strategy?", options: ["A) Exporting", "B) Licensing", "C) Joint Venture", "D) Acquisition"], answer: "D" },
+                { id: "w2_q6", question: "According to the 7 QC Tools, the Pareto Diagram is based on which principle?", options: ["A) 70-30 rule", "B) 80-20 rule", "C) 60-40 rule", "D) 90-10 rule"], answer: "B" },
+                { id: "w2_q7", question: "The PDCA cycle was made popular by which consultant, though attributed to Walter Shewhart?", options: ["A) Joseph Juran", "B) Philip Crosby", "C) William Edwards Deming", "D) Kaoru Ishikawa"], answer: "C" },
+                { id: "w2_q8", question: "On-Time Delivery (OTD) is a KPI that belongs to which category of logistics management?", options: ["A) Transportation Management", "B) Supply Management", "C) Distribution Management", "D) Warehousing and Order Management"], answer: "C" },
+                { id: "w2_q9", question: "In the 5S philosophy, 'SEISO' corresponds to which action?", options: ["A) Sort", "B) Set in Order", "C) Standardize", "D) Shine"], answer: "D" },
+                { id: "w2_q10", question: "Which of the following is a challenge unique to cross-border transactions compared to domestic ones?", options: ["A) Use of barcodes", "B) Currency exchange rate fluctuations", "C) Use of warehousing", "D) Product packaging"], answer: "B" }
+              ]
+            },
+            {
+              weekNumber: 3,
+              questions: [
+                { id: "w3_q1", question: "Which of the following is listed as a factor for successful reverse logistics?", options: ["A) Maximizing landfill usage", "B) Reducing supplier collaboration", "C) Technology and Data Analytics", "D) Minimizing customer returns policy options"], answer: "C" },
+                { id: "w3_q2", question: "Green Supply Chain Management (GSCM) primarily reflects the relationship between:", options: ["A) Financial planning and procurement", "B) Natural environment and supply chain operations", "C) Customer satisfaction and brand management", "D) Manufacturing output and warehouse capacity"], answer: "B" },
+                { id: "w3_q3", question: "Myntra's initiative to replace poly pouches with recycled paper bags is an example of which green logistics practice?", options: ["A) Green transportation", "B) Green procurement", "C) Green packaging", "D) Green warehousing"], answer: "C" },
+                { id: "w3_q4", question: "Lean logistics focuses primarily on:", options: ["A) Increasing inventory buffer levels", "B) Expanding supplier networks across borders", "C) Eliminating waste, improving efficiency, and streamlining supply chain processes", "D) Maximizing warehouse storage space utilization"], answer: "C" },
+                { id: "w3_q5", question: "Which of the following is NOT one of the 7 types of Muda as categorized by Taiichi Ohno within the Toyota Production System?", options: ["A) Innovation", "B) Waiting", "C) Transport", "D) Overproduction"], answer: "A" },
+                { id: "w3_q6", question: "'Muri' in the context of lean logistics means:", options: ["A) Waste in production processes", "B) Unevenness in demand and production", "C) Overburden or unnecessary stress on employees and processes", "D) Excess inventory holding costs"], answer: "C" },
+                { id: "w3_q7", question: "The term 'Lean Logistics' was coined by whom in his 1988 master's thesis at MIT?", options: ["A) Taiichi Ohno", "B) John Krafcik", "C) Shigeo Shingo", "D) Kiichiro Toyoda"], answer: "B" },
+                { id: "w3_q8", question: "The principle of lean logistics that involves creating a visual representation of all steps in the process including material flows, information flows, and process times is called:", options: ["A) Just-in-Time (JIT)", "B) DMAIC", "C) 5S", "D) Value Stream Mapping (VSM)"], answer: "D" },
+                { id: "w3_q9", question: "In the DMAIC methodology, what does the 'C' stand for?", options: ["A) Coordinate", "B) Confirm", "C) Control", "D) Calculate"], answer: "C" },
+                { id: "w3_q10", question: "Heijunka in the Toyota Production System refers to:", options: ["A) Error-proofing devices to prevent defects", "B) Production smoothing to level fluctuations in demand and performance", "C) Continuous improvement through small incremental changes", "D) Autonomous defect detection and machine stoppage"], answer: "B" }
+              ]
+            },
+            {
+              weekNumber: 4,
+              questions: [
+                { id: "w4_q1", question: "Elastic logistics refers to:", options: ["A) The use of rubber materials in packaging", "B) The ability of a business to rapidly reduce or expand logistics activities in line with supply chain demand using data-driven technology", "C) A method of stretching delivery deadlines", "D) Flexible pricing models for shipping"], answer: "B" },
+                { id: "w4_q2", question: "In logistics, blockchain technology primarily helps by:", options: ["A) Increasing fuel consumption", "B) Reducing the need for transportation", "C) Replacing all human warehouse workers", "D) Identifying non-compliance with standards or product damage, and improving workflow through smart contracts"], answer: "D" },
+                { id: "w4_q3", question: "Amazon's 'anticipatory shipping' works by:", options: ["A) Shipping all products from a single central warehouse", "B) Predicting when, where, and which items customers will purchase based on buying habit history", "C) Requiring customers to pre-pay for shipping months in advance", "D) Only delivering products on weekends"], answer: "B" },
+                { id: "w4_q4", question: "Which performance measure for modern day logistics assesses metrics such as carbon emissions, fuel consumption, and waste generation?", options: ["A) Efficiency", "B) Cost-effectiveness", "C) Environmental impact", "D) Customer satisfaction"], answer: "C" },
+                { id: "w4_q5", question: "Flipkart's use of drone deliveries in some areas is an example of which trend in Indian logistics?", options: ["A) Last-mile delivery innovations", "B) Cold chain logistics", "C) Blockchain adoption", "D) Reverse logistics optimization"], answer: "A" },
+                { id: "w4_q6", question: "Who is credited by many experts as the person who coined the term 'supply chain management' in the early 1980s?", options: ["A) Taiichi Ohno", "B) Keith Oliver", "C) Michael Porter", "D) Peter Drucker"], answer: "B" },
+                { id: "w4_q7", question: "Less Than Truckload (LTL) shipping primarily benefits businesses by:", options: ["A) Requiring customers to pay for the entire truck regardless of usage", "B) Increasing the environmental impact of shipping", "C) Eliminating the need for any carriers", "D) Allowing customers to pay only for the portion of carrier space they use, while consolidating multiple smaller orders"], answer: "D" },
+                { id: "w4_q8", question: "Which role of Big Data in logistics helps companies analyze historical and real-time data to forecast demand and anticipate disruptions?", options: ["A) Predictive analytics", "B) Route optimization", "C) Warehouse management", "D) Risk management"], answer: "A" },
+                { id: "w4_q9", question: "In blockchain-based logistics, 'smart contracts' are best described as:", options: ["A) Paper contracts signed digitally", "B) Insurance contracts for damaged goods", "C) Contracts that require manual approval at every step", "D) Self-executing contracts with predefined rules that are automatically enforced when certain criteria are met"], answer: "D" },
+                { id: "w4_q10", question: "Cold chain logistics management is primarily concerned with:", options: ["A) The management and transportation of temperature-sensitive products like perishables and pharmaceuticals in a controlled environment", "B) Managing logistics operations during winter seasons only", "C) Reducing the cost of air conditioning in warehouses", "D) Shipping goods only to cold regions"], answer: "A" }
+              ]
+            },
+            {
+              weekNumber: 5,
+              questions: [
+                { id: "w5_q1", question: "Which supply chain model is best suited for companies affected by seasonality, with high demand peaks and low volume at other times?", options: ["A) Continuous flow model", "B) Agile model", "C) Fast model", "D) Flexible model"], answer: "D" },
+                { id: "w5_q2", question: "In the Manufacturing vs Service Supply Chain comparison, how is 'demand uncertainty' managed differently?", options: ["A) Manufacturing uses queues; services use inventory", "B) Manufacturing uses inventory; services use queues", "C) Both use inventory equally", "D) Both use queues equally"], answer: "B" },
+                { id: "w5_q3", question: "Production Management attempts to utilize the '6 M's'. Which of the following is NOT one of the 6 M's?", options: ["A) Man and Machine", "B) Methods and Money", "C) Materials and Markets", "D) Motivation and Media"], answer: "D" },
+                { id: "w5_q4", question: "What is the correct sequence of the first three steps in Procurement Management?", options: ["A) Placing the Purchase Order → Negotiating the Contract → Identifying and Planning", "B) Identifying and Planning → Choosing and Selecting Suppliers → Negotiating the Contract", "C) Negotiating the Contract → Identifying and Planning → Choosing Suppliers", "D) Receipt and Inspection → Clearing the Invoice → Maintaining Records"], answer: "B" },
+                { id: "w5_q5", question: "Vertical Integration in sourcing involves:", options: ["A) Forming joint ventures with international companies", "B) Merging of companies at different production and/or distribution stages in the same industry", "C) Outsourcing all non-core activities", "D) Purchasing from multiple suppliers simultaneously"], answer: "B" },
+                { id: "w5_q6", question: "Which of the following is a key characteristic of a Service Supply Chain's production system?", options: ["A) Pull (initiated by customer demand)", "B) Push (sell from inventory)", "C) Both push and pull equally", "D) Neither push nor pull"], answer: "A" },
+                { id: "w5_q7", question: "Which type of sourcing involves delegating a job to someone within the company itself?", options: ["A) Outsourcing", "B) Near-sourcing", "C) Insourcing", "D) Global sourcing"], answer: "C" },
+                { id: "w5_q8", question: "The three principle streams of the supply chain are:", options: ["A) Planning, Execution, and Monitoring", "B) Procurement/Supply/Sourcing; Operations/Material/Production; Logistics/Distribution", "C) Inbound, Internal, and Outbound logistics", "D) Strategic, Tactical, and Operational management"], answer: "B" },
+                { id: "w5_q9", question: "Logistics Management ensures that the right product is delivered to the right place, at the right time, and in the right condition, while:", options: ["A) Maximizing advertising spend", "B) Minimizing costs and maximizing efficiency", "C) Increasing production batch sizes", "D) Reducing the number of suppliers"], answer: "B" },
+                { id: "w5_q10", question: "Supply chain network design decisions are classified into four categories. Which of the following is NOT one of them?", options: ["A) Facility role", "B) Facility location", "C) Employee compensation", "D) Capacity allocation"], answer: "C" }
+              ]
+            },
+            {
+              weekNumber: 6,
+              questions: [
+                { id: "w6_q1", question: "'Implied demand uncertainty' in a supply chain focuses on:", options: ["A) The total annual sales forecast of a company along with the variability caused due to seasonal patterns", "B) The uncertainty associated with the portion of demand the supply chain plans to satisfy", "C) The transportation costs across distribution centres", "D) The variability in supplier pricing because of the seasonal pricing"], answer: "B" },
+                { id: "w6_q2", question: "The three Supply Chain Macro Processes are:", options: ["A) Planning, Sourcing, and Delivering", "B) Design, Build, and Distribute", "C) Procurement, Operations, and Logistics", "D) Customer Relationship Management, Internal Supply Chain Management, and Supplier Relationship Management"], answer: "D" },
+                { id: "w6_q3", question: "In the Cyclic View of the supply chain, which cycle occurs at the interface between the retailer and the distributor?", options: ["A) Customer order cycle", "B) Replenishment cycle", "C) Manufacturing cycle", "D) Procurement cycle"], answer: "B" },
+                { id: "w6_q4", question: "In the Push/Pull View of the supply chain, a 'Pull' process is best defined as:", options: ["A) Execution initiated in anticipation of customer orders (speculative)", "B) Producing goods before knowing actual customer demand", "C) Execution initiated in response to a customer order (reactive)", "D) Holding large amounts of finished goods inventory"], answer: "C" },
+                { id: "w6_q5", question: "Which Transportation mode is generally used to achieve the highest responsiveness in a supply chain?", options: ["A) Sea freight", "B) Rail transport", "C) Air freight", "D) Pipeline"], answer: "C" },
+                { id: "w6_q6", question: "The six key drivers of supply chain performance are:", options: ["A) Facilities, Inventory, Transportation, Information, Sourcing, and Pricing", "B) People, Process, Technology, Culture, Structure, and Strategy", "C) Planning, Scheduling, Executing, Monitoring, Controlling, and Improving", "D) Procurement, Operations, Logistics, Distribution, Returns, and Sustainability"], answer: "A" },
+                { id: "w6_q7", question: "Centralizing facilities in a supply chain tends to:", options: ["A) Increase responsiveness and increase costs", "B) Increase efficiency but reduce responsiveness", "C) Reduce efficiency and reduce responsiveness", "D) Increase responsiveness and reduce costs"], answer: "B" },
+                { id: "w6_q8", question: "According to Little's Law in inventory management, reducing inventory while keeping throughput constant will:", options: ["A) Decrease flow time", "B) Increase flow time", "C) Have no effect on flow time", "D) Eliminate the need for safety stock"], answer: "A" },
+                { id: "w6_q9", question: "In Amazon's pricing example, customers opting for free shipping (ships in 7-14 business days) help Amazon by:", options: ["A) Generating the highest revenue per order", "B) Levelling out the workload at the warehouse over time, improving efficiency", "C) Increasing the urgency of Amazon's logistics operations", "D) Reducing Amazon's need for any inventory"], answer: "B" },
+                { id: "w6_q10", question: "A firm serving primarily emergency orders faces what level of implied demand uncertainty compared to a firm with long lead times?", options: ["A) Lower", "B) Equal", "C) Higher", "D) No difference in"], answer: "C" }
+              ]
+            },
+            {
+              weekNumber: 7,
+              questions: [
+                { id: "w7_q1", question: "According to the traditional view of supply chain management, which of the following are considered the three primary 'impellers' that drive a supply chain?", options: ["A) Sustainability, Collaboration, and Globalization", "B) Empowered Customers, Information Technology Tool Developments, and Globalization", "C) Pricing Mechanisms, Sourcing Strategies, and Inventory Management", "D) Systems Concept, Total Cost Concept, and Trade-off Concept"], answer: "B" },
+                { id: "w7_q2", question: "Which of the following best describes the 'bullwhip effect' in a supply chain?", options: ["A) The process of reducing total operational costs by eliminating hidden expenses in procurement and storage", "B) A phenomenon where small fluctuations in consumer demand leads to increasingly larger variations in orders placed further upstream in the supply chain", "C) A strategic approach to minimizing inventory by having suppliers manage the replenishment process directly", "D) The impact of globalization on increasing competition and operational risks for businesses"], answer: "B" },
+                { id: "w7_q3", question: "Which concept encapsulates the proactive ability of supply chain professionals to anticipate, understand, and effectively navigate shifts and challenges within the supply chain environment?", options: ["A) Demand Sense", "B) Supply Response", "C) Supply Sense", "D) Demand Response"], answer: "C" },
+                { id: "w7_q4", question: "As organizations digitize their operations using modern ERP tools, IoT sensors, and AI/ML automation, what critical strategy must they increasingly invest in to mitigate the rising rate of network threats and security risks?", options: ["A) Agile Scaling Strategy", "B) Cybersecurity Strategy", "C) Collaborative Forecasting Strategy", "D) Predictive Maintenance Strategy"], answer: "B" },
+                { id: "w7_q5", question: "Achieving a 'strategic fit' within an organization is a systematic process. Which of the following outlines the correct order of the three sequential steps required to achieve this alignment?", options: ["A) Step 1: Minimize supply chain costs; Step 2: Maximize response times; Step 3: Expand regional warehouse facilities", "B) Step 1: Optimize internal inventory size; Step 2: Establish supplier locations; Step 3: Formulate marketing pricing", "C) Step 1: Understanding the customer and supply chain uncertainty; Step 2: Understanding the supply chain capabilities; Step 3: Achieving strategic fit or Coordinate Functional Strategies", "D) Step 1: Implementing advanced ERP tools; Step 2: Executing robot automation; Step 3: Launching cybersecurity strategies"], answer: "C" },
+                { id: "w7_q6", question: "According to the case study, why does the smartphone giant Apple Inc. choose to outsource the manufacturing and assembly of all its devices to China rather than keeping production in the United States?", options: ["A) Because hardware design and software engineering are its only core competencies, and China offers substantially lower manufacturing costs", "B) Because United States trade regulations strictly prohibit the domestic assembly of advanced telecommunication tools", "C) Because Apple relies entirely on Chinese consumer markets to purchase more than 90% of its global outgoing inventory", "D) Because manufacturing is considered Apple's primary core competency, and it owns the majority of operating facilities located in China"], answer: "A" },
+                { id: "w7_q7", question: "According to the case study, what core logistics procedure lies at the heart of Walmart's strategy to efficiently replenish stock, decrease inventory and transportation costs, and save transit time?", options: ["A) Collaborative Planning, Forecasting, and Replenishment (CPFR)", "B) Cross-docking", "C) Third-Party Logistics (3PL) Outsourcing", "D) Vendor-Managed Inventory (VMI)"], answer: "B" },
+                { id: "w7_q8", question: "When a company evaluates its distribution design strategy, which specific component is responsible for designing systems and technologies such as demand forecasting and order management to facilitate seamless communication and ensure real-time visibility across the entire supply chain?", options: ["A) Operating Facilities", "B) Information Flows", "C) Logistics Strategy", "D) Service Differentiation"], answer: "B" },
+                { id: "w7_q9", question: "Michael Porter's Five Forces model is traditionally applied to overall business strategy, how is it specifically adapted in this context to benefit an organization's operations?", options: ["A) To calculate the exact financial payback period of automating a warehouse", "B) To analyze competitive forces and assess the dynamics of the supply chain environment", "C) To measure the daily inventory turnover ratio of active retail facilities", "D) To completely replace the internal SWOT analysis before beginning logistics planning"], answer: "B" },
+                { id: "w7_q10", question: "How can outsourcing and strategic alliances help businesses 'Enhance Competitiveness' in the market?", options: ["A) By allowing them to access specialized resources, capabilities, and expertise that they may not possess internally", "B) By eliminating the need to track predefined KPIs and benchmarks", "C) By shifting all market frictions and regulatory compliance entirely onto the end customer", "D) By ensuring that all manufacturing and design processes are strictly localized within a single operating facility"], answer: "A" }
+              ]
+            },
+            {
+              weekNumber: 8,
+              questions: [
+                { id: "w8_q1", question: "What is the primary focus of strategic sourcing?", options: ["A) Finding the absolute lowest purchase price only", "B) Maximizing short-term transaction volumes", "C) Optimizing the supply chain and achieving long-term business goals", "D) Eliminating all international suppliers"], answer: "C" },
+                { id: "w8_q2", question: "How are 'A-Class Suppliers' characterized in an ABC Analysis framework?", options: ["A) A large number of suppliers that account for low spend or importance", "B) A moderate number of suppliers with average spend or importance", "C) Suppliers that offer the lowest initial purchase price regardless of quality", "D) A small number of suppliers that account for the majority of spend or strategic importance"], answer: "D" },
+                { id: "w8_q3", question: "What is the fundamental definition of 'Lead Time'?", options: ["A) The total profit margin generated by an individual product line", "B) The duration required to complete a specific task or process", "C) The number of items successfully returned by a customer per quarter", "D) The maximum storage capacity of a localized distribution centre"], answer: "B" },
+                { id: "w8_q4", question: "What is the main purpose of 'Collaborative Forecasting' between suppliers and manufacturers?", options: ["A) To predict future demand so suppliers can adjust their production schedules accordingly", "B) To determine the retail price of finished goods", "C) To eliminate the need for any contract negotiations", "D) To shift all market risks exclusively onto the distributors"], answer: "A" },
+                { id: "w8_q5", question: "Which perspective of the Balanced Scorecard focuses on indicators like process alignment, identifying process bottlenecks, and increasing process automation?", options: ["A) Financial Perspective", "B) Customer Perspective", "C) Internal Process Perspective", "D) Learning and Growth Perspective"], answer: "C" },
+                { id: "w8_q6", question: "'Data inaccuracies and delays in information sharing' are classified under which category of obstacles?", options: ["A) Information processing obstacles", "B) Inventive obstacles", "C) Operational obstacles", "D) Pricing obstacles"], answer: "A" },
+                { id: "w8_q7", question: "What is the core purpose of a formal vendor rating system?", options: ["A) To automatically lower the retail price of consumer goods", "B) To assess and monitor supplier performance based on criteria like delivery, quality, price, and service", "C) To eliminate the need for cross-functional management teams", "D) To completely outsource the procurement department's activities"], answer: "B" },
+                { id: "w8_q8", question: "Who originally developed the Balanced Scorecard (BSC) framework?", options: ["A) Sunil Chopra and Peter Meindl", "B) Taiichi Ohno and Shigeo Shingo", "C) Michael Porter and Peter Drucker", "D) Robert Kaplan and David Norton"], answer: "D" },
+                { id: "w8_q9", question: "When evaluating the 'Cost' dimension in global sourcing, what should an organization consider beyond just the primary purchase price?", options: ["A) Marketing expenses and corporate tax rates", "B) Total cost of ownership and potential infrastructure investments", "C) Domestic inflation rates and retail price indexing", "D) Competitor pricing models and local labour union fees"], answer: "B" },
+                { id: "w8_q10", question: "In the Kraljic Matrix model, a supplier categorized as having a 'High profit impact' but 'Low supply risk' is known as a:", options: ["A) Strategic Supplier", "B) Bottleneck Supplier", "C) Leverage Supplier", "D) Non-critical Supplier"], answer: "C" }
+              ]
+            },
+            {
+              weekNumber: 9,
+              questions: [
+                { id: "w9_q1", question: "Which of the following describes how a company targeting customers who value short response times should design its distribution network?", options: ["A) Locate fewer facilities that are farther away from the customers", "B) Locate facilities close to the customers", "C) Centralize all inventory in a single global warehouse", "D) Rely solely on digital delivery methods"], answer: "B" },
+                { id: "w9_q2", question: "What is defined as 'the probability of having a product in stock when a customer order arrives'?", options: ["A) Product Availability", "B) Response Time", "C) Product Variety", "D) Order Visibility"], answer: "A" },
+                { id: "w9_q3", question: "Why do outbound transportation costs per unit tend to be higher than inbound transportation costs?", options: ["A) Outbound shipments travel much longer distances", "B) Inbound shipments are heavily taxed by the government", "C) Outbound products require specialized temperature-controlled vehicles", "D) Inbound lot sizes are typically larger, allowing for economies of scale"], answer: "D" },
+                { id: "w9_q4", question: "What is the final leg of the delivery process where products are brought directly to the customer's doorstep called in online sales distribution?", options: ["A) Fulfillment Centering", "B) Last-Mile Delivery", "C) Inventory Aggregation", "D) Order Processing"], answer: "B" },
+                { id: "w9_q5", question: "Which of the following is a key characteristic of the 'Manufacturer Storage with Direct Shipping' distribution network design?", options: ["A) Products are stored at retail stores for customer pickup.", "B) Inventory is held entirely by third-party distributors in regional hubs", "C) The manufacturer eliminates intermediaries and ships products directly to the end customer", "D) Products must pass through a local distributor before reaching the customer"], answer: "C" },
+                { id: "w9_q6", question: "The study of facility location problems (FLP), also known as location analysis, is a branch of which two academic fields?", options: ["A) Operations Research and Computational Geometry", "B) Macroeconomics and Behavioral Psychology", "C) Human Resource Management and Civil Engineering", "D) Financial Accounting and Marketing Analytics"], answer: "A" },
+                { id: "w9_q7", question: "When using the point rating technique, what should the total sum of all assigned weights equal if you are using decimals?", options: ["A) 0.5", "B) 1", "C) 5", "D) 10"], answer: "B" },
+                { id: "w9_q8", question: "Factors like the Cost of Labor, Cost of Land and Facilities, and Taxation fall under which main category?", options: ["A) Environmental Factors", "B) Social Factors", "C) Economic Factors", "D) Technological Factors"], answer: "C" },
+                { id: "w9_q9", question: "The Centre of Gravity (CG) model is a mathematical approach primarily used to determine the optimal location for a new facility by minimizing which of the following?", options: ["A) Local property and corporate income tax rates", "B) Transportation costs associated with serving multiple locations", "C) Employee turnover and training costs", "D) Environmental regulations and compliance fees"], answer: "B" },
+                { id: "w9_q10", question: "According to the case study, how did Dell's distribution model change in 2007?", options: ["A) They completely shut down their online sales channel", "B) They began distributing their products through retail stores like Wal-Mart", "C) They shifted entirely to a distributor storage with carrier delivery network", "D) They stopped selling customized hardware to focus only on standardized PCs"], answer: "B" }
+              ]
+            },
+            {
+              weekNumber: 10,
+              questions: [
+                { id: "w10_q1", question: "According to demand forecasting is the process of understanding and predicting customer demand to help businesses avoid which of the following?", options: ["A) High shipping costs and bad PR", "B) Overproduction and underproduction", "C) Competition entering the market", "D) Falling crude oil prices"], answer: "B" },
+                { id: "w10_q2", question: "If a business sells swimwear and strategically decides to store the majority of its inventory in Florida where it is ordered most, which factor influencing demand forecast are they addressing?", options: ["A) Competition", "B) Economy", "C) Geography", "D) Seasonality"], answer: "C" },
+                { id: "w10_q3", question: "Why can relying too heavily on historical sales data lead to inaccurate demand predictions?", options: ["A) Because past data cannot account for various evolving market factors", "B) Because past data is completely deleted every calendar year", "C) Because historical data is only useful for startup businesses", "D) Because it forces companies to hire too many data analysts"], answer: "A" },
+                { id: "w10_q4", question: "What does expert or insider knowledge refer to in the context of demand forecasting?", options: ["A) Information gathered strictly from automated internet search bots", "B) Specialized understanding and insights held by individuals with significant experience in a particular field or industry", "C) Financial data publicly released by international banking institutions", "D) Customer feedback forms collected randomly from retail storefronts"], answer: "B" },
+                { id: "w10_q5", question: "Which of the following correctly identifies the formula used to calculate a facility's Efficiency percentage?", options: ["A) Efficiency = (Actual Output / Design Capacity) * 100%", "B) Efficiency = (Effective Capacity / Design Capacity) * 100%", "C) Efficiency = (Actual Output / Effective Capacity) * 100%", "D) Efficiency = (Design Capacity - Allowances) * 100%"], answer: "C" },
+                { id: "w10_q6", question: "What are the four major components that make up transportation decisions in supply chain management?", options: ["A) Production, Planning, Efficiency, and Utilization", "B) Fixed Cost, Variable Cost, Revenue, and Profit", "C) Load, Mode, Flow, and Route", "D) Interviews, Focus Groups, Surveys, and Delphi Method"], answer: "C" },
+                { id: "w10_q7", question: "According to a Balanced Transportation Problem is a special case where which of the following conditions is met?", options: ["A) The total variable costs exactly equal the total fixed costs", "B) The total supply from all sources equals the total demand at all destinations", "C) The shipment volume is optimized using only rail and road transit", "D) The number of source factories is exactly equal to the number of retail outlets"], answer: "B" },
+                { id: "w10_q8", question: "How does accurate demand forecasting help a business strike the right balance in inventory management?", options: ["A) By reducing carrying costs and preventing stockouts", "B) By ensuring that products are only sold online", "C) By automatically increasing the prices of older items", "D) By replacing human workers with automated machinery"], answer: "A" },
+                { id: "w10_q9", question: "Which type of capacity planning considers future requirements over several years and utilizes supply and need forecasting to align carefully with business goals and growth?", options: ["A) Short-term Capacity Planning", "B) Operational Capacity Planning", "C) Medium-term Capacity Planning", "D) Long-term or Strategic Capacity Planning"], answer: "D" },
+                { id: "w10_q10", question: "Which of the following sets of factors is explicitly mentioned as a reason why companies have limited visibility into the future when predicting demand?", options: ["A) Overproduction, underproduction, and short shelf-lives", "B) Lack of human resources, bad PR, and high shipping costs", "C) Market volatility, rapid technological changes, and unpredictable external events", "D) Steady customer retention, passive forecasting, and geographic planning"], answer: "C" }
+              ]
+            },
+            {
+              weekNumber: 11,
+              questions: [
+                { id: "w11_q1", question: "Which of the following formulas is used to calculate Minimum Stock?", options: ["A) Minimum Stock = Safety Stock - Buffer Stock", "B) Minimum Stock = Buffer Stock + Safety Stock", "C) Minimum Stock = Reorder level + Safety Stock", "D) Minimum Stock = Maximum Daily Sales + Maximum Lead Time"], answer: "B" },
+                { id: "w11_q2", question: "Which type of inventory consists of items kept in reserve to be processed by a second machine if the first machine fails?", options: ["A) Cycle Inventory", "B) Transit Inventory", "C) MRO Inventory", "D) Decoupling Inventory"], answer: "D" },
+                { id: "w11_q3", question: "What does the Days Sales of Inventory (DSI) metric specifically indicate about a company's inventory?", options: ["A) The total cost of raw materials purchased in a single year.", "B) The percentage of profit earned from each unit of inventory sold.", "C) The maximum number of days a company can store finished goods before they expire.", "D) The average time in days it takes for a company to turn its inventory into sales."], answer: "D" },
+                { id: "w11_q4", question: "The 'Zero Inventory' concept is primarily based on which manufacturing and inventory management strategy?", options: ["A) Bulk Ordering Strategy", "B) Over-Stocking Principle", "C) Just-In-Time (JIT)", "D) Manual Data Recording"], answer: "C" },
+                { id: "w11_q5", question: "What is the ultimate goal of a resilient supply chain?", options: ["A) To bounce back from disruptions and learn from them to improve future performance", "B) To ensure a company never has to change its suppliers", "C) To eliminate all human workers from the manufacturing process", "D) To increase the amount of paperwork required for every transaction"], answer: "A" },
+                { id: "w11_q6", question: "Which of the following is a key benefit of supply chain digitization that helps companies avoid high stockout costs?", options: ["A) Better financial management through automated reorder notifications", "B) Manual record-keeping", "C) Increased reliance on paper-based documentation", "D) Eliminating all human workers from the warehouse"], answer: "A" },
+                { id: "w11_q7", question: "What is the core principle of Vendor Managed Inventory (VMI)?", options: ["A) The retailer is solely responsible for managing all stock in the warehouse.", "B) Inventory is only managed once it has been fully depleted.", "C) Customers must manage the inventory themselves before making a purchase.", "D) The supplier assumes responsibility for managing the inventory at the retailer's location."], answer: "D" },
+                { id: "w11_q8", question: "In the ABC Analysis model, which category of inventory typically represents only 20% of the total stock but accounts for 70% of the total income?", options: ["A) Category C", "B) Category B", "C) Category A", "D) Category D"], answer: "C" },
+                { id: "w11_q9", question: "Which of the following is a key component of supply chain digitization that uses devices like sensors and RFID tags to collect real-time data on inventory and shipments?", options: ["A) Manual Ledger Entry", "B) Traditional Filing Systems", "C) Paper-based Documentation", "D) Internet of Things (IoT)"], answer: "D" },
+                { id: "w11_q10", question: "In the context of supply chain management and digitization, what does the abbreviation ERP stand for?", options: ["A) Enterprise Resource Planning", "B) Electronic Resource Planning", "C) Efficient Retail Processing", "D) Essential Reliable Procurement"], answer: "A" }
+              ]
+            },
+            {
+              weekNumber: 12,
+              questions: [
+                { id: "w12_q1", question: "What is the core goal of supply chain sustainability?", options: ["A) To minimize environmental harm from factors like energy, water, and waste", "B) To replace traditional corporate supply chain concerns entirely", "C) To focus exclusively on raw material sourcing and ignore storage or delivery", "D) To find the fastest transportation links available"], answer: "A" },
+                { id: "w12_q2", question: "Who originally coined and developed the concept of the Triple Bottom Line?", options: ["A) John Elkington", "B) Michael Porter", "C) Edward Freeman", "D) Peter Drucker"], answer: "A" },
+                { id: "w12_q3", question: "Goods that are currently in the middle of being manufactured but are not yet completed are classified as what type of asset?", options: ["A) Raw Materials", "B) Work-in-Progress (WIP)", "C) Packaging Materials", "D) Finished Goods"], answer: "B" },
+                { id: "w12_q4", question: "Which of the following represents a traditional corporate supply chain concern that exists in addition to sustainability efforts?", options: ["A) Human impact on communities", "B) Water consumption", "C) Revenue and profit", "D) Energy usage"], answer: "C" },
+                { id: "w12_q5", question: "What is the primary barrier to implementing sustainable supply chains?", options: ["A) Lack of corporate offices", "B) Cost", "C) Fast shipping speeds", "D) Excessive software options"], answer: "B" },
+                { id: "w12_q6", question: "Why do conventional supply chains adopt proactive or reactive strategies?", options: ["A) To completely change their business model every year", "B) To shut down all local operations permanently", "C) To address disruptions like fires, floods, or labour strikes", "D) To avoid using any transportation networks"], answer: "C" },
+                { id: "w12_q7", question: "Which type of supply chain asset refers to the initial components or materials used to start the production process?", options: ["A) Raw Materials", "B) Tools and Equipment", "C) Finished Goods", "D) Work-in-Progress (WIP)"], answer: "A" },
+                { id: "w12_q8", question: "Which specific real-world event is explicitly highlighted as an example of effective humanitarian supply chain coordination?", options: ["A) The 2024 global shipping route restructuring", "B) The EY sustainability survey launch", "C) The Unilever global distribution expansion", "D) The 2015 Nepal earthquake"], answer: "D" },
+                { id: "w12_q9", question: "What is the meaning of supply chain asset?", options: ["A) Any tangible or intangible resource within a supply chain that contributes to its overall functioning and value creation", "B) Only the cash stored in a company's corporate bank account", "C) A government tax applied to international shipping routes", "D) The total number of customers who buy a product online"], answer: "A" },
+                { id: "w12_q10", question: "Unlike inventory management, Asset Management is responsible for managing items:", options: ["A) Only when customers return them due to dissatisfaction", "B) With minimal contact and minimal details recorded", "C) Through their complete life cycles, from procurement to disposal", "D) Strictly to replenish goods and parts to sell to customers"], answer: "C" }
+              ]
+            }
+          ]
+        };
+
+        function App() {
+            const [selectedWeek, setSelectedWeek] = useState(1);
+            const [userAnswers, setUserAnswers] = useState({});
+            const [submitted, setSubmitted] = useState(false);
+
+            const currentWeekData = quizData.weeks.find(w => w.weekNumber === selectedWeek);
+
+            const handleOptionSelect = (qId, optionChar) => {
+                if (submitted) return;
+                setUserAnswers({ ...userAnswers, [qId]: optionChar });
+            };
+
+            const handleSubmit = () => {
+                setSubmitted(true);
+            };
+
+            const handleReset = () => {
+                setUserAnswers({});
+                setSubmitted(false);
+            };
+
+            let score = 0;
+            if (submitted) {
+                currentWeekData.questions.forEach(q => {
+                    if (userAnswers[q.id] === q.answer) score++;
+                });
+            }
+
+            return (
+                <div className="max-w-4xl mx-auto px-4 py-8">
+                    <header className="bg-indigo-600 text-white rounded-2xl p-6 shadow-lg mb-8">
+                        <h1 className="text-2xl md:text-3xl font-bold mb-2">NPTEL Practice Portal</h1>
+                        <p className="text-indigo-100 text-sm md:text-base">{quizData.course}</p>
+                    </header>
+
+                    <div className="flex gap-2 overflow-x-auto pb-4 mb-6">
+                        {quizData.weeks.map(w => (
+                            <button
+                                key={w.weekNumber}
+                                onClick={() => { setSelectedWeek(w.weekNumber); setSubmitted(false); setUserAnswers({}); }}
+                                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all ${selectedWeek === w.weekNumber ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
+                            >
+                                Week {w.weekNumber}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 mb-6">
+                        <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                            <h2 className="text-xl font-bold text-slate-800">Week {selectedWeek} Assignment</h2>
+                            <span className="text-sm font-semibold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">10 Questions</span>
+                        </div>
+
+                        {submitted && (
+                            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 text-center">
+                                <h3 className="text-lg font-bold text-indigo-900 mb-1">Quiz Completed!</h3>
+                                <p className="text-3xl font-extrabold text-indigo-600 mb-2">{score} / 10</p>
+                                <p className="text-sm text-indigo-700">Your accuracy: {(score / 10) * 100}%</p>
+                            </div>
+                        )}
+
+                        <div className="space-y-8">
+                            {currentWeekData.questions.map((q, idx) => {
+                                const userOpt = userAnswers[q.id];
+                                const isCorrect = userOpt === q.answer;
+                                return (
+                                    <div key={q.id} className="border-b border-slate-100 pb-6 last:border-0">
+                                        <p className="font-semibold text-slate-900 mb-4">
+                                            <span className="text-indigo-600 mr-2">Q{idx + 1}.</span> {q.question}
+                                        </p>
+                                        <div className="space-y-2">
+                                            {q.options.map(opt => {
+                                                const optLetter = opt.charAt(0);
+                                                const isSelected = userOpt === optLetter;
+                                                let btnStyle = "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100";
+                                                
+                                                if (submitted) {
+                                                    if (optLetter === q.answer) {
+                                                        btnStyle = "bg-emerald-50 border-emerald-300 text-emerald-900 font-medium";
+                                                    } else if (isSelected && !isCorrect) {
+                                                        btnStyle = "bg-rose-50 border-rose-300 text-rose-900";
+                                                    }
+                                                } else if (isSelected) {
+                                                    btnStyle = "bg-indigo-50 border-indigo-300 text-indigo-900 font-medium";
+                                                }
+
+                                                return (
+                                                    <button
+                                                        key={optLetter}
+                                                        onClick={() => handleOptionSelect(q.id, optLetter)}
+                                                        disabled={submitted}
+                                                        className={`w-full text-left p-3 rounded-xl border text-sm transition-all ${btnStyle}`}
+                                                    >
+                                                        {opt}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end gap-4">
+                            {!submitted ? (
+                                <button
+                                    onClick={handleSubmit}
+                                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2.5 rounded-xl shadow-md transition-all"
+                                >
+                                    Submit Quiz
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleReset}
+                                    className="bg-slate-800 hover:bg-slate-900 text-white font-medium px-6 py-2.5 rounded-xl shadow-md transition-all"
+                                >
+                                    Try Again
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
